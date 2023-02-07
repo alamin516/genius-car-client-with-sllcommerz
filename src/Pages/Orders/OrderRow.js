@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import OrderDetails from '../../components/Modal/OrderDetails';
 
 const OrderRow = ({ order, handleDelete }) => {
     const { _id, serviceName, phone, customer, price, service, paid } = order;
     const [orderService, setOrderService] = useState({})
-    console.log(order)
+    let [isOpen, setIsOpen] = useState(false)
+
+    function closeModal() {
+        setIsOpen(false)
+    }
+
+    function openModal() {
+        setIsOpen(true)
+    }
 
     useEffect(() => {
-        fetch(`http://localhost:5000/services/${service}`)
+        fetch(`https://sllcommerz.vercel.app/services/${service}`)
             .then(res => res.json())
             .then(data => setOrderService(data));
     }, [service])
 
-    
+
 
     return (
         <tr>
@@ -25,7 +34,7 @@ const OrderRow = ({ order, handleDelete }) => {
                     <div className="avatar">
                         <div className="rounded w-24 h-24">
                             {
-                                orderService?.img && 
+                                orderService?.img &&
                                 <img src={orderService.img} alt="Avatar Tailwind CSS Component" />}
                         </div>
                     </div>
@@ -40,13 +49,20 @@ const OrderRow = ({ order, handleDelete }) => {
                 <br />
                 <span className="badge badge-ghost badge-sm">${price}</span>
             </td>
-            <td>Purple</td>
             <td>
                 <span className="text-green-600 font-bold">{paid && "Paid"}</span>
             </td>
             <td>
-                <button className='bg-orange-600 px-3 py-1 rounded-lg text-white hover:bg-gray-300'>details</button>
+                <button
+                    type="button"
+                    onClick={openModal}
+                    className='bg-orange-600 px-3 py-1 rounded-lg text-white hover:bg-gray-300'>details</button>
             </td>
+            <OrderDetails
+                isOpen={isOpen}
+                closeModal={closeModal}
+                order={order}
+            ></OrderDetails>
         </tr>
     );
 };

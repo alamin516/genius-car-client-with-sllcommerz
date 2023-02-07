@@ -28,6 +28,8 @@ const Checkout = () => {
       currency
     };
 
+    console.log(order
+      )
     // if(phone.length > 10){
     //     alert('Phone number should be 10 characters or longer')
     // }
@@ -35,7 +37,7 @@ const Checkout = () => {
 
     // }
 
-    fetch("http://localhost:5000/orders", {
+    fetch(`https://sllcommerz.vercel.app/orders`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

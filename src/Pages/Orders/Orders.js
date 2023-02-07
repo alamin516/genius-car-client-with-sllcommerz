@@ -5,9 +5,9 @@ import OrderRow from './OrderRow';
 const Orders = () => {
     const { user, logOut } = useContext(AuthContext);
     const [orders, setOrders] = useState([])
-
+    
     useEffect(() => {
-        fetch(`http://localhost:5000/orders?email=${user?.email}`, {
+        fetch(`https://sllcommerz.vercel.app/orders?email=${user?.email}`, {
             headers: {
                 authorization: `Bearer ${localStorage.getItem('genius-token')}`
             }
@@ -26,7 +26,7 @@ const Orders = () => {
     const handleDelete = id => {
         const proceed = window.confirm('Are you sure, you want to cancel this order');
         if (proceed) {
-            fetch(`http://localhost:5000/orders/${id}`, {
+            fetch(`https://sllcommerz.vercel.app/orders/${id}`, {
                 method: 'DELETE',
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('genius-token')}`
@@ -70,14 +70,13 @@ const Orders = () => {
         <div>
             <h2 className="text-5xl">You have {orders.length} Orders</h2>
             <div className="overflow-x-auto w-full">
-                <table className="table w-full">
+                <table className="table w-full z-0">
                     <thead>
                         <tr>
                             <th>
                             </th>
                             <th>Name</th>
                             <th>Job</th>
-                            <th>Favorite Color</th>
                             <th>Status</th>
                             <th>Payment Details</th>
                         </tr>
